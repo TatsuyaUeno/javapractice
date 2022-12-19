@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry
+        location="C:\eclipse2\javapractice\lib\mysql-connector-java-5.1.33.jar" />
+    <context id="context1">
+ 
+<!--     JDBCの設定です (1) -->
+        <jdbcConnection
+            driverClass="com.mysql.jdbc.Driver"
+            connectionURL="jdbc:mysql://localhost:3306/javapracticeDB"
+            userId="root"
+            password=""
+        />
+ 
+<!--     自動生成するエンティティの設定です (2) -->
+        <javaModelGenerator
+            targetPackage="com.javapractice.app.mybatis.model"
+            targetProject="javapractice/src/main/java"
+        />
+        
+        <sqlMapGenerator
+            targetPackage="com.javapractice.app.mybatis.mapper"
+            targetProject="javapractice/src/main/java"
+        />
+        
+        <javaClientGenerator
+            targetPackage="com.javapractice.app.mybatis.client"
+            targetProject="javapractice/src/main/java"
+            type="XMLMAPPER"
+        />
+ 
+<!--     生成対象のテーブルです（3) -->
+        <table schema="javapracticeDB" tableName="tb_diary" />
+    </context>
+</generatorConfiguration>

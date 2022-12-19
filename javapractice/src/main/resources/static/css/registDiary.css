@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.tarea{
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    background: rgb(255, 255, 255);
+    margin: 0.5em 0;
+    line-height: 1.5;
+    height: 6em;
+}
