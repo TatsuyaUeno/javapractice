@@ -1,10 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>日誌登録</title>
-<link th:href="@{/css/template.css}" rel="stylesheet">
-<script th:src="@{/js/diary.js}"></script>
+<title>日誌表示</title>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/template.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/viewDiary.css">
+<script src="<%= request.getContextPath() %>/js/diary.js"></script>
 </head>
 <body>
 

@@ -1,12 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>メニュー画面</title>
 
-<link th:href="@{/css/template.css}" rel="stylesheet">
-<link th:href="@{/css/menu.css}" rel="stylesheet">
-<script th:src="@{/js/menu.js}"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/template.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/menu.css">
+<script src="<%= request.getContextPath() %>/js/menu.js"></script>
+
 </head>
 <body>
 <div>

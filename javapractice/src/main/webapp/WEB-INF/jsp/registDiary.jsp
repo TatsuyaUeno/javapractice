@@ -1,14 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>日誌登録</title>
-<link th:href="@{/css/template.css}" rel="stylesheet">
-<link th:href="@{/css/registDiary.css}" rel="stylesheet">
-<script th:src="@{/js/diary.js}"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/template.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/registDiary.css">
+<script src="<%= request.getContextPath() %>/js/diary.js"></script>
 </head>
 <body>
-
 <header class="header">
 	<h1 class="header_title">日誌登録</h1>
 </header>
@@ -33,6 +34,5 @@
 </main>
 <footer class="footer">
 </footer>
-
 </body>
 </html>
