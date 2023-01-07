@@ -30,12 +30,12 @@ li {
 
 main {
   background-color: #f1f1f1;
-  height: 800px;
+  height: auto;
   display: flex;
 }
 
 .main {
-  margin: auto;
+  margin: 100px 100px 100px 100px;
 }
 
 .footer {
@@ -47,18 +47,3 @@ main {
 .footer div {
   margin: auto;
 }
-
-/* 参考サイト：https://saruwakakun.com/html-css/basic/table */
-table th {/*table内のthに対して*/
-  padding: 10px;/*上下左右10pxずつ*/
-  border: none;
-  border-bottom: 2px solid black;
-  font-size: 22px;
-}
-
-table td {/*table内のtdに対して*/
-  padding: 3px 10px;/*上下3pxで左右10px*/
-  border: none;
-  border-bottom: 1px solid black;
-}
-

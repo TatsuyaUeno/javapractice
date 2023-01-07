@@ -26,7 +26,8 @@ const registInputDiary = function() {
 	// API通信
 	fetch("/regist/diary/insertDiary",
 		{method: "POST", headers: {"Content-Type": "application/json"},
-		body: JSON.stringify(requestMap)}
+		body: JSON.stringify(requestMap)
+		}
 	).then((res) => {
 		// 非同期通信ステータスチェック
 		if (!res.ok) {
@@ -45,7 +46,7 @@ const registInputDiary = function() {
 			// 失敗の処理
 			alert(data[errorMessage]);
 		} else {
-			alert("日誌番号【" + data["registDiaryId"] + "】登録処理に成功しました。");
+			alert("日誌番号【" + data["registDiaryId"] + "】登録に成功しました。");
 		}
 	}
 	).catch(error => {
@@ -71,33 +72,60 @@ function getRequestMap() {
 
 /** ------------表示画面------------------ */
 
-const selectAll = function() {
-    fetch("/view/diary/selectAll", 
-    	{method: "POST", headers: {'Content-Type': 'application/json'}}
-    	)
+const selectDate = function() {
+	var requestMap = {};
+	requestMap["year"] = document.getElementById("year").value;
+	requestMap["month"] = document.getElementById("month").value;
+	// テーブル表示
+    fetch("/view/diary/view", 
+    	{method: "POST", headers: {'Content-Type': 'application/json'},
+    	body: JSON.stringify(requestMap)
+    	}
     // Stringの場合はtext()を使う（型によって変更する必要がある）
-    .then(res => {
+    ).then(res => {
 	// 通信失敗か判定
 		if (!res.ok) {
-		console.log("サーバーエラー：非同期通信に失敗しました。")
+			alert("サーバーエラー：非同期通信に失敗しました。")
 		}
-		// 成功時の処理
 		return res.json();
 	}
-	).then(
-      data => {
-        console.log(data);
-        var res = data[0];
-        console.log(res);
+	).then(data => {
+		// response = {diaryId:値, subjectType:値, title:値, content1:値
+		//             content2:値, content3:値, registDate:値, remarks:値}
+		console.log(data);
+		// ヘッダー表示用
+		var view =
+		"<tr>"
+		+ "<th>日誌番号</th>"
+		+ "<th>種別</th>"
+		+ "<th>タイトル</th>"
+		+ "<th>内容1</th>"
+		+ "<th>内容2</th>"
+		+ "<th>内容3</th>"
+		+ "<th>登録日時</th>"
+		+ "<th>備考</th>"
+		+ "</tr>"
+		;
+		// テーブルの値を表示用
+		for (var tbDiary of data) {
+			view = view + "<tr>"
+			view = view + "<td>" + tbDiary["diaryId"] + "</td>";
+			view = view + "<td>" + tbDiary["subjectType"] + "</td>";
+			view = view + "<td>" + tbDiary["title"] + "</td>";
+			view = view + "<td>" + tbDiary["content1"] + "</td>";
+			view = view + "<td>" + tbDiary["content2"] + "</td>";
+			view = view + "<td>" + tbDiary["content3"] + "</td>";
+			view = view + "<td>" + tbDiary["registDate"] + "</td>";
+			view = view + "<td>" + tbDiary["remarks"] + "</td>";
+			view = view + "</tr>"
+		}
+		console.log(view);
+		// JSPのid=viewTableに表示する
+		document.getElementById("viewTable").innerHTML = view;
+		
+	})
+}
 
-        document.getElementById("diary_id").innerHTML = res[tb_diary.diaryId];
-        document.getElementById("subject_type").innerHTML = res[tb_diary.subjectType];
-        document.getElementById("title").innerHTML = res[tb_diary.title];
-        document.getElementById("content1").innerHTML = res[tb_diary.content1];
-        document.getElementById("content2").innerHTML = res[tb_diary.content2];
-        document.getElementById("content3").innerHTML = res[tb_diary.content3];
-        document.getElementById("regist_date").innerHTML = res[tb_diary.registDate];
-        document.getElementById("remarks").innerHTML = res[tb_diary.remarks];
-      }
-    )
+const hiddenDate = function() {
+	document.getElementById("viewTable").innerHTML = "";
 }

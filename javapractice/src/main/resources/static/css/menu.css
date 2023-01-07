@@ -1,1 +1,15 @@
 @charset "UTF-8";
+
+/* 参考サイト：https://saruwakakun.com/html-css/basic/table */
+table th {/*table内のthに対して*/
+  padding: 10px;/*上下左右10pxずつ*/
+  border: none;
+  border-bottom: 2px solid black;
+  font-size: 22px;
+}
+
+table td {/*table内のtdに対して*/
+  padding: 3px 10px;/*上下3pxで左右10px*/
+  border: none;
+  border-bottom: 1px solid black;
+}

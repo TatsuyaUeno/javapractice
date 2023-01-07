@@ -1,5 +1,8 @@
 package com.javapractice.app.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -11,7 +14,7 @@ import org.springframework.util.ObjectUtils;
 public class ValidationUtil {
 
 	/**
-	 * APIで入力された値のバリデーションチェック<br>
+	 * APIで入力された値(リクエストパラメータ)のバリデーションチェック<br>
 	 * 画面で入力された値とその項目が必須かどうかのboolean
 	 * @param inputValue 画面の入力値
 	 * @param isRequiedFiled リクエストenumに保持している必須項目かどうかのboolean
@@ -29,5 +32,21 @@ public class ValidationUtil {
 
 		// 必須で値がなかった場合
 		return false;
+	}
+
+	/**
+	 * 数字が1～12か判定する
+	 * @param num 数字
+	 * @return 一致すればtrue, しなければfalse
+	 */
+	public static boolean checkMonth(String num) {
+		Pattern pattern = Pattern.compile("[1-9]|1[0-2]");
+		Matcher matcher = pattern.matcher(num);
+
+		if (matcher.find()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import="java.util.List"
+    import="com.javapractice.app.mybatis.model.TbDiary"
+%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -12,35 +15,19 @@
 <body>
 
 <header class="header">
-	<h1 class="header_title">日誌登録</h1>
+	<h1 class="header_title">日誌閲覧</h1>
 </header>
 <main>
 	<div class="main">
 		<div class="search">
-			<input type="button" value="表示" onClick="selectAll()"/>
+			<p>年を入力してください：<input type="text" placeholder="例：2022" id="year"></p>
+			<p>月を入力してください：<input type="text" placeholder="0を入力するとすべて表示" id="month"></p>
+			<input type="button" value="表示" onClick="selectDate()"/>
+			<input type="button" value="非表示" onClick="hiddenDate()"/>
 		</div>
 		<div class="view">
-			<table border="1">
-				<tr>
-					<th>日誌番号</th>
-					<th>種別</th>
-					<th>タイトル</th>
-					<th>内容1</th>
-					<th>内容2</th>
-					<th>内容3</th>
-					<th>登録日時</th>
-					<th>備考</th>
-				</tr>
-				<tr>
-					<td id="diary_id"></td>
-					<td id="subject_type"></td>
-					<td id="title"></td>
-					<td id="content1"></td>
-					<td id="content2"></td>
-					<td id="content3"></td>
-					<td id="regist_date"></td>
-					<td id="remarks"></td>
-				</tr>
+			<table id="viewTable" border="1">
+				<!-- JavaScriptで記述したHTML -->
 			</table>
 		</div>
 	</div>

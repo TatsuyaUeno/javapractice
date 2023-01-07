@@ -1,7 +1,6 @@
 package com.javapractice.app.controller;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,10 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.javapractice.app.dto.ResponseDiaryDto;
+import com.javapractice.app.dto.ResponseRegistDiaryDto;
+import com.javapractice.app.dto.ResponseViewDairyDto;
 import com.javapractice.app.logic.TbDiaryLogic;
-import com.javapractice.app.mybatis.model.TbDiary;
 import com.javapractice.app.service.RegistDiaryService;
+import com.javapractice.app.service.ViewDiaryService;
 
 /**
  * 日誌に関するコントローラー
@@ -33,6 +33,8 @@ public class DiaryController {
 	/** Serviceクラス */
 	@Autowired
 	private RegistDiaryService registDiaryService;
+	@Autowired
+	private ViewDiaryService viewDiaryService;
 
 	/** ロジッククラス */
 	@Autowired
@@ -56,10 +58,10 @@ public class DiaryController {
 	 * @return errorMessageMap エラーがなければvalue="", あればvalue="エラー文"
 	 */
 	@ResponseBody
-	@PostMapping("regist/diary/insertDiary")
-	public ResponseDiaryDto insertDiary(@RequestBody HashMap<String, String> requestMap) {
+	@PostMapping("/regist/diary/insertDiary")
+	public ResponseRegistDiaryDto insertDiary(@RequestBody HashMap<String, String> requestMap) {
 		// レスポンス用Dto
-		ResponseDiaryDto responseDto = new ResponseDiaryDto();
+		ResponseRegistDiaryDto responseDto = new ResponseRegistDiaryDto();
 
 		// ログの頭文字
 		String logPrefix = "【日誌登録処理】 ";
@@ -95,22 +97,33 @@ public class DiaryController {
 	}
 
 	/**
-	 * 画面表示お試し用
-	 * @return
+	 * 画面表示用<br>
+	 * 画面で入力された月のデータを返す<br>
+	 * 0が入力された場合、その年のすべてのデータを返す<br>
+	 * @param Map<String, String> (year or month, 値)
+	 * @return tb_diaryの取得したレコード(DB身取得の場合、nullを返す)
 	 */
 	@ResponseBody
-	@PostMapping("/view/diary/selectAll")
-	public List<TbDiary> selectAll() {
-		// TODO お試しなので後で消すかも
+	@PostMapping("/view/diary/view")
+	public ResponseViewDairyDto selectAll(@RequestBody HashMap<String, String> requestMap) {
+		// 戻り値
+		ResponseViewDairyDto responseViewDairyDto = new ResponseViewDairyDto();
 
-		// 画面に送る値
-		List<TbDiary> tbDiaryList = null;
+		// requestMapに値がなければ即返す
+		for (String key: requestMap.keySet()) {
+			if (requestMap.get(key).isEmpty()) {
+				responseViewDairyDto.setErrorMessage("年月を入力してください。");
+				return responseViewDairyDto;
+			}
+		}
+
 		try {
-			tbDiaryList = tbDiaryLogic.selectAll();
+			viewDiaryService.selectRecord(requestMap, responseViewDairyDto);
 		} catch (Exception e) {
-			System.out.println("DB接続でエラーが発生しました。");
+			logger.warn("予期せぬエラーが発生しました。");
+			responseViewDairyDto.setErrorMessage("予期せぬエラーが発生しました。");
 			e.printStackTrace();
 		}
-		return tbDiaryList;
+		return responseViewDairyDto;
 	}
 }

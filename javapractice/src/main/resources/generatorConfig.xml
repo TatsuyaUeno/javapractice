@@ -31,6 +31,6 @@
         />
  
 <!--     生成対象のテーブルです（3) -->
-        <table schema="javapracticeDB" tableName="tb_diary" />
+        <table schema="javapracticeDB" tableName="tb_exec_class" />
     </context>
 </generatorConfiguration>

@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.javapractice.app.dto.ResponseDiaryDto;
+import com.javapractice.app.dto.ResponseRegistDiaryDto;
 import com.javapractice.app.enums.RequestDiary;
 import com.javapractice.app.logic.TbDiaryLogic;
 import com.javapractice.app.mybatis.model.TbDiary;
@@ -39,7 +39,7 @@ public class RegistDiaryService {
 	 * @param responseDto 
 	 * @return
 	 */
-	public ResponseDiaryDto insertDiary(Map<String, String> requestMap, ResponseDiaryDto responseDto, String logPrefix) throws Exception {
+	public ResponseRegistDiaryDto insertDiary(Map<String, String> requestMap, ResponseRegistDiaryDto responseDto, String logPrefix) throws Exception {
 		// リクエストボディから値をEntityクラスに詰める
 		TbDiary tbDiaryEntity = new TbDiary();
 		tbDiaryEntity.setSubjectType(requestMap.get(RequestDiary.SUBJECT_TYPE.getKey()));

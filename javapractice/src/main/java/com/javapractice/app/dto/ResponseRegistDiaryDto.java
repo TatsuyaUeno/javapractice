@@ -5,7 +5,7 @@ package com.javapractice.app.dto;
  * @author tatsuya
  *
  */
-public class ResponseDiaryDto {
+public class ResponseRegistDiaryDto {
 
 	/** 登録した日誌番号 */
 	private String registDiaryId;
@@ -22,7 +22,7 @@ public class ResponseDiaryDto {
 	 * errorMessage = 空文字<br>
 	 * processFlg = false
 	 */
-	public ResponseDiaryDto() {
+	public ResponseRegistDiaryDto() {
 		this.errorMessage = "";
 		this.processFlg = false;
 	}

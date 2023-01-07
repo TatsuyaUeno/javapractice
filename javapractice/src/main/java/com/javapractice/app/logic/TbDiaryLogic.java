@@ -10,7 +10,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.javapractice.app.dto.ResponseDiaryDto;
+import com.javapractice.app.constants.Constants;
+import com.javapractice.app.dto.ResponseRegistDiaryDto;
 import com.javapractice.app.mybatis.client.TbDiaryMapper;
 import com.javapractice.app.mybatis.model.TbDiary;
 import com.javapractice.app.util.SqlSessionUtil;
@@ -24,6 +25,9 @@ import com.javapractice.app.util.SqlSessionUtil;
 @Component
 public class TbDiaryLogic {
 
+	/** SqlSessionFactory */
+	private SqlSessionFactory sqlSessionFactory;
+	
 	/** 
 	 * コンストラクタ<br>
 	 * SQL操作を行うためのSqlSessionをmybatis-config(設定ファイル)から読み込む
@@ -32,11 +36,6 @@ public class TbDiaryLogic {
 	public TbDiaryLogic() throws IOException {
 		this.sqlSessionFactory = SqlSessionUtil.getSqlSession();
 	}
-
-	private static final String ERROR_MESSAGE = "DB操作で予期せぬエラーが発生しました。";
-
-	/** SqlSessionFactory */
-	private SqlSessionFactory sqlSessionFactory;
 
 	/** ログ */
 	private static final Log logger = LogFactory.getLog(TbDiaryLogic.class);
@@ -57,8 +56,8 @@ public class TbDiaryLogic {
 			result = mapper.selectAll();
 			
 		} catch (Exception e) {
-			System.out.println(e);
-			throw new Exception();
+			logger.warn(Constants.DB_ERROR_MESSAGE, e);
+			throw new Exception(Constants.DB_ERROR_MESSAGE);
 		}
 		return result;
 	}
@@ -78,13 +77,13 @@ public class TbDiaryLogic {
 			
 			return mapper.countRecord(date);
 		} catch (Exception e) {
-			logger.warn(ERROR_MESSAGE, e);
-			throw new Exception(ERROR_MESSAGE);
+			logger.error(Constants.DB_ERROR_MESSAGE, e);
+			throw new Exception(Constants.DB_ERROR_MESSAGE);
 		}
 	}
 
 	@Transactional
-	public void insertDiary(TbDiary tbDiaryEntity, ResponseDiaryDto responseDto, String logPrefix) throws Exception {
+	public void insertDiary(TbDiary tbDiaryEntity, ResponseRegistDiaryDto responseDto, String logPrefix) throws Exception {
 		try {
 			SqlSession session = sqlSessionFactory.openSession();
 			TbDiaryMapper mapper = session.getMapper(TbDiaryMapper.class);
@@ -92,8 +91,8 @@ public class TbDiaryLogic {
 			logger.info(logPrefix + "日誌番号: " + tbDiaryEntity.getDiaryId() + ", 処理件数: " + insertCnt);
 			session.commit();
 		} catch (Exception e) {
-			logger.warn(ERROR_MESSAGE, e);
-			throw new Exception(ERROR_MESSAGE);
+			logger.error(Constants.DB_ERROR_MESSAGE, e);
+			throw new Exception(Constants.DB_ERROR_MESSAGE);
 		}
 		// 正常終了の場合、レスポンスDtoに日誌番号をsetし、プロセスフラグをtrueに
 		responseDto.setRegistDiaryId(tbDiaryEntity.getDiaryId());
