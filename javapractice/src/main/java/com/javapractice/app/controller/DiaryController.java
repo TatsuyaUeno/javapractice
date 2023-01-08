@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javapractice.app.dto.ResponseRegistDiaryDto;
 import com.javapractice.app.dto.ResponseViewDairyDto;
-import com.javapractice.app.logic.TbDiaryLogic;
 import com.javapractice.app.service.RegistDiaryService;
 import com.javapractice.app.service.ViewDiaryService;
 
@@ -35,10 +34,6 @@ public class DiaryController {
 	private RegistDiaryService registDiaryService;
 	@Autowired
 	private ViewDiaryService viewDiaryService;
-
-	/** ロジッククラス */
-	@Autowired
-	private TbDiaryLogic tbDiaryLogic;
 
 /** --------------------登録画面-------------------------- */
 

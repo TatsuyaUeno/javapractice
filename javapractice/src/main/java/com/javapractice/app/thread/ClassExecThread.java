@@ -14,6 +14,9 @@ import com.javapractice.app.logic.TbExecClassLogic;
 /**
  * Spring起動時に起動するThread<br>
  * クラス実行テーブルを監視するスレッド<br>
+ * ※Runner(画面から実行したいクラス)を新しく実装する場合、下記パッケージ配下に作成すること<br>
+ * com.javapractice.app.runner<br>
+ * ※Runnerには、execEvent(String arg)メソッドを用意すること<br>
  * @author tatsuya
  *
  */
@@ -45,28 +48,31 @@ public class ClassExecThread extends Thread {
 		while (flg) {
 			logger.info(logPrefix + "監視中...");
 			List<String> classNameList = null;
-			// TODO DB検索処理とクラス実行処理を書く
+
 			// 実行フラグ = 1で実行フラグテーブルを検索
 			try {
 				classNameList = tbExecClassLogic.selectActiveExecFlg();
 				// 取得したクラス名分クラスを起動させる
 				for (String className: classNameList) {
 					// リフレクション(文字列のクラス名からメソッド起動)
-					Class<?> c = Class.forName(RUNNER_PACKAGE + className);
-					Object obj = c.newInstance();
-					Method m = c.getMethod(METHOD_NAME, String.class);
-					m.invoke(obj, "");
-					logger.info(logPrefix + "クラス名[" + className + "]を実行しました。");
-				}
-	
-				// スレッド起動後、クラス実行テーブル.実行フラグを0にする
-				for (String className: classNameList) {
-					// テスト用Hogeは実行フラグ=1のままにしておく
-					if (className.equals("HogePrintRunner")) {continue;}
-					tbExecClassLogic.updateExecFlg(className, Constants.STOP_EXEC_FLG);
-					logger.info(logPrefix + "クラス名=[" + className + "]の実行フラグを落としました。");
-				}
+					try {
+						Class<?> c = Class.forName(RUNNER_PACKAGE + className);
+						Object obj = c.newInstance();
+						Method m = c.getMethod(METHOD_NAME, String.class);
+						m.invoke(obj, "");
 
+						logger.info(logPrefix + "クラス名=[" + className + "]を起動に成功しました。");
+					} catch (ClassNotFoundException cnfe) {
+						// クラスが存在しない場合、クラス名をログに表示する
+						logger.warn(logPrefix + "クラスが存在しません。クラス名=[" + className + "]");
+					} finally {
+						// テスト用Hogeは実行フラグを落とさない
+						if (!className.equals("HogePrintRunner")) {
+							tbExecClassLogic.updateExecFlg(className, Constants.STOP_EXEC_FLG, logPrefix);
+							logger.info(logPrefix + "クラス名=[" + className + "]の実行フラグを落としました。");
+						}
+					}
+				}
 				// 30秒ごとに監視するため、スレッドを30秒停止
 				Thread.sleep(30000);
 			} catch (InterruptedException ie) {
@@ -74,9 +80,9 @@ public class ClassExecThread extends Thread {
 			} catch (Exception e) {
 				logger.error(logPrefix + e);
 				e.printStackTrace();
-				logger.info(logPrefix + "エラーが発生したため、監視を停止します。");
-				flg = false;			}
-
+				logger.error(logPrefix + "エラーが発生したため、監視を停止します。");
+				flg = false;
+			}
 		}
 	}
 }

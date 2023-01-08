@@ -9,6 +9,7 @@ public class Constants {
 
 	/** 文字列 */
 	public static final String UNDER_SCORE = "_";
+	public static final String EMPTY_CHAR = "";
 
 	/** メッセージ */
 	public static final String DB_ERROR_MESSAGE = "DB接続でエラーが発生しました。";

@@ -1,5 +1,8 @@
 package com.javapractice.app.runner;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * テストHOGERunner<br>
  * @author tatsuya
@@ -7,7 +10,9 @@ package com.javapractice.app.runner;
  */
 public class HogePrintRunner {
 
+	private static final Log logger = LogFactory.getLog(HogePrintRunner.class);
+
 	public void execEvent(String arg) {
-		System.out.println("HOGE");
+		logger.info("HOGE");
 	}
 }

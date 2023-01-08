@@ -1,6 +1,7 @@
 package com.javapractice.app.logic;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.javapractice.app.constants.Constants;
 import com.javapractice.app.mybatis.client.TbExecClassMapper;
+import com.javapractice.app.mybatis.model.TbExecClass;
 import com.javapractice.app.util.SqlSessionUtil;
 
 /**
@@ -51,29 +53,71 @@ public class TbExecClassLogic {
 			
 			result = mapper.selectActiveExecFlg(Constants.START_EXEC_FLG);
 		} catch (Exception e) {
-			logger.error(Constants.DB_ERROR_MESSAGE, e);
+			e.printStackTrace();
 			throw new Exception(Constants.DB_ERROR_MESSAGE);
 		}
 		return result;
 	}
 
 	/**
-	 * 引数の値にDB更新を行う<br>
+	 * クラス名と実行フラグを受け取りレコードを更新する<br>
 	 * @param className クラス名(プライマリーキー)
 	 * @param execFlg　実行フラグ
 	 * @throws Exception
 	 */
 	@Transactional
-	public void updateExecFlg(String className, String execFlg) throws Exception {
+	public void updateExecFlg(String className, String execFlg, String logPrefix) throws Exception {
 		try {
+			logger.info(logPrefix + "クラス実行テーブル更新処理を開始します。");
 			SqlSession session = sqlSessionFactory.openSession();
 			// 設定ファイルに定義したmapperクラスをget
 			TbExecClassMapper mapper = session.getMapper(TbExecClassMapper.class);
 			mapper.updateExecFlg(className, execFlg);
 			session.commit();
+			logger.info(logPrefix + "クラス実行テーブル更新処理を終了します。");
 		} catch (Exception e) {
-			logger.error(Constants.DB_ERROR_MESSAGE);
+			e.printStackTrace();
 			throw new Exception(Constants.DB_ERROR_MESSAGE);
 		}
+	}
+
+	/**
+	 * 1件INSERT<br>
+	 * @param tbExecClassModel 登録するmodel
+	 * @param logPrefix ログ接頭語
+	 * @throws Exception
+	 */
+	@Transactional
+	public void insert(TbExecClass tbExecClass, String logPrefix) throws Exception {
+		try {
+			logger.info(logPrefix + "クラス実行テーブル登録処理を開始します。");
+			SqlSession session = sqlSessionFactory.openSession();
+			// 設定ファイルに定義したmapperクラスをget
+			TbExecClassMapper mapper = session.getMapper(TbExecClassMapper.class);
+			mapper.insert(tbExecClass);
+			session.commit();
+			logger.info(logPrefix + "クラス実行テーブル登録処理を終了します。");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(Constants.DB_ERROR_MESSAGE);
+		}
+	}
+
+	/**
+	 * 全件取得<br>
+	 * @return List<TbExecClass>
+	 * @throws Exception 
+	 */
+	public List<TbExecClass> selectAll() throws Exception {
+		List<TbExecClass> tbExecClassList = new ArrayList<TbExecClass>();
+		try {
+			SqlSession session = sqlSessionFactory.openSession();
+			TbExecClassMapper mapper = session.getMapper(TbExecClassMapper.class);
+			tbExecClassList = mapper.selectAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(Constants.DB_ERROR_MESSAGE);
+		}
+		return tbExecClassList;
 	}
 }

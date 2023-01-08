@@ -6,8 +6,8 @@
 <meta charset="UTF-8">
 <title>メニュー画面</title>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/template.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/menu.css">
 <script src="<%= request.getContextPath() %>/js/menu.js"></script>
 
 </head>
@@ -18,15 +18,18 @@
 	</header>
 	<main>
 		<div class="main">
-			<table>
+			<table class="table table-bordered border-success">
 				<tr>
 					<th>日誌</th>
+					<th>クラス実行</th>
 				</tr>
 				<tr>
 					<td><a href="/regist/diary">日誌登録</a></td>
+					<td><a href="/exec/class">クラス実行</a></td>
 				</tr>
 				<tr>
 					<td><a href="/view/diary">日誌閲覧</a></td>
+					<td></td>
 				</tr>
 			</table>
 		</div>

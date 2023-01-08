@@ -164,6 +164,9 @@ public interface TbExecClassMapper extends CommonCountMapper, CommonDeleteMapper
         );
     }
 
+    @Select("SELECT * FROM tb_exec_class")
+    List<TbExecClass> selectAll();
+
     @Select("SELECT class_name FROM tb_exec_class WHERE exec_flg = #{execFlg}")
     List<String> selectActiveExecFlg(String execFlg);
 
