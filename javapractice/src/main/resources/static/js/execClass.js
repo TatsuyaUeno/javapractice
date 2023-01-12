@@ -47,7 +47,7 @@ const updateExecFlg = function() {
 		if (data["message"]) {
 			alert(resMessage);
 		} else {
-			alert("クラス名：「" + resClassName + "」を実行しました。");
+			alert("クラス名：「" + resClassName + "」の実行フラグを1にしました。");
 		}
 	}).catch(error => {
 		console.log("非同期通信に失敗しました。", error);

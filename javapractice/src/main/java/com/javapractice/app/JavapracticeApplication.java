@@ -28,6 +28,6 @@ public class JavapracticeApplication {
 	 */
 	public void execStartup(String[] args) {
 		// クラス実行テーブル監視スレッド
-		classExecThread.start();
+		new Thread(classExecThread).start();
 	}
 }

@@ -71,61 +71,40 @@ function getRequestMap() {
 
 
 /** ------------表示画面------------------ */
+function viewDiarySearch() {
+	// プルダウンの値取得
+	const selects = document.form1.prefecture;
+	const idx = selects.selectedIndex;
+	const subjectType = selects.options[idx].value;
+	// チェックボックスの値取得
+	const archiveFlg = document.getElementsByName("archiveFlg")[0].checked;
 
-const selectDate = function() {
+	console.log(subjectType);
+	console.log(archiveFlg);
+	
 	var requestMap = {};
-	requestMap["year"] = document.getElementById("year").value;
-	requestMap["month"] = document.getElementById("month").value;
-	// テーブル表示
-    fetch("/view/diary/view", 
-    	{method: "POST", headers: {'Content-Type': 'application/json'},
-    	body: JSON.stringify(requestMap)
-    	}
-    // Stringの場合はtext()を使う（型によって変更する必要がある）
-    ).then(res => {
-	// 通信失敗か判定
-		if (!res.ok) {
-			alert("サーバーエラー：非同期通信に失敗しました。")
+	requestMap["subjectType"] = subjectType;
+	requestMap["tbDiaryAkFlg"] = archiveFlg;
+	console.log(requestMap);
+
+	fetch("/view/diary/search",
+		{method: "POST", headers: {"Content-Type": "application/json"},
+		body: JSON.stringify(requestMap)
 		}
-		return res.json();
+	).then((res) => {
+		// 非同期通信ステータスチェック
+		if (!res.ok) {
+			console.log("サーバーエラー：非同期通信に失敗しました。");
+			
+		}
+		return res.text();
 	}
 	).then(data => {
-		// response = {diaryId:値, subjectType:値, title:値, content1:値
-		//             content2:値, content3:値, registDate:値, remarks:値}
-		console.log(data);
-		// ヘッダー表示用
-		var view =
-		"<tr>"
-		+ "<th>日誌番号</th>"
-		+ "<th>種別</th>"
-		+ "<th>タイトル</th>"
-		+ "<th>内容1</th>"
-		+ "<th>内容2</th>"
-		+ "<th>内容3</th>"
-		+ "<th>登録日時</th>"
-		+ "<th>備考</th>"
-		+ "</tr>"
-		;
-		// テーブルの値を表示用
-		for (var tbDiary of data) {
-			view = view + "<tr>"
-			view = view + "<td>" + tbDiary["diaryId"] + "</td>";
-			view = view + "<td>" + tbDiary["subjectType"] + "</td>";
-			view = view + "<td>" + tbDiary["title"] + "</td>";
-			view = view + "<td>" + tbDiary["content1"] + "</td>";
-			view = view + "<td>" + tbDiary["content2"] + "</td>";
-			view = view + "<td>" + tbDiary["content3"] + "</td>";
-			view = view + "<td>" + tbDiary["registDate"] + "</td>";
-			view = view + "<td>" + tbDiary["remarks"] + "</td>";
-			view = view + "</tr>"
-		}
-		console.log(view);
-		// JSPのid=viewTableに表示する
-		document.getElementById("viewTable").innerHTML = view;
-		
-	})
-}
-
-const hiddenDate = function() {
-	document.getElementById("viewTable").innerHTML = "";
+		// レスポンス処理
+		// 本当はだめだけどhtmlを書き換える形になっちゃった
+		document.getElementById("changeView").innerHTML = data;
+	}
+	).catch(error => {
+		console.log("非同期通信に失敗しました。", error);
+	});
 }

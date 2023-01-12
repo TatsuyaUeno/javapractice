@@ -21,7 +21,7 @@ import com.javapractice.app.logic.TbExecClassLogic;
  *
  */
 @Component
-public class ClassExecThread extends Thread {
+public class ClassExecThread implements Runnable {
 
 	/** ロジッククラス */
 	@Autowired
@@ -43,6 +43,7 @@ public class ClassExecThread extends Thread {
 	 * クラス実行テーブルの監視
 	 */
 	@SuppressWarnings("deprecation")
+	@Override
 	public void run() {
 		boolean flg = true;
 		while (flg) {
@@ -59,18 +60,15 @@ public class ClassExecThread extends Thread {
 						Class<?> c = Class.forName(RUNNER_PACKAGE + className);
 						Object obj = c.newInstance();
 						Method m = c.getMethod(METHOD_NAME, String.class);
+						logger.info(logPrefix + "クラス名=[" + className + "]を実行します。");
 						m.invoke(obj, "");
-
-						logger.info(logPrefix + "クラス名=[" + className + "]を起動に成功しました。");
 					} catch (ClassNotFoundException cnfe) {
 						// クラスが存在しない場合、クラス名をログに表示する
 						logger.warn(logPrefix + "クラスが存在しません。クラス名=[" + className + "]");
 					} finally {
-						// テスト用Hogeは実行フラグを落とさない
-						if (!className.equals("HogePrintRunner")) {
-							tbExecClassLogic.updateExecFlg(className, Constants.STOP_EXEC_FLG, logPrefix);
-							logger.info(logPrefix + "クラス名=[" + className + "]の実行フラグを落としました。");
-						}
+						// 実行フラグを落とす(0にする)
+						tbExecClassLogic.updateExecFlg(className, Constants.STOP_EXEC_FLG, logPrefix);
+						logger.info(logPrefix + "クラス名=[" + className + "]の実行フラグを落としました。");
 					}
 				}
 				// 30秒ごとに監視するため、スレッドを30秒停止
@@ -78,7 +76,6 @@ public class ClassExecThread extends Thread {
 			} catch (InterruptedException ie) {
 				logger.info(logPrefix + "Thread.sleepに失敗しました。");
 			} catch (Exception e) {
-				logger.error(logPrefix + e);
 				e.printStackTrace();
 				logger.error(logPrefix + "エラーが発生したため、監視を停止します。");
 				flg = false;

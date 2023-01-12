@@ -1,16 +1,14 @@
 package com.javapractice.app.mybatis.client;
 
-import static com.javapractice.app.mybatis.client.TbDiaryDynamicSqlSupport.*;
+import static com.javapractice.app.mybatis.client.TbDiaryAkDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Generated;
 
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
@@ -33,16 +31,16 @@ import org.mybatis.dynamic.sql.util.mybatis3.CommonInsertMapper;
 import org.mybatis.dynamic.sql.util.mybatis3.CommonUpdateMapper;
 import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 
-import com.javapractice.app.mybatis.model.TbDiary;
+import com.javapractice.app.mybatis.model.TbDiaryAk;
 
 @Mapper
-public interface TbDiaryMapper extends CommonCountMapper, CommonDeleteMapper, CommonInsertMapper<TbDiary>, CommonUpdateMapper {
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5770121+09:00", comments="Source Table: tb_diary")
+public interface TbDiaryAkMapper extends CommonCountMapper, CommonDeleteMapper, CommonInsertMapper<TbDiaryAk>, CommonUpdateMapper {
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5153238+09:00", comments="Source Table: tb_diary_ak")
     BasicColumn[] selectList = BasicColumn.columnList(diaryId, subjectType, title, registDate, remarks, content1, content2, content3);
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5638611+09:00", comments="Source Table: tb_diary")
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5013329+09:00", comments="Source Table: tb_diary_ak")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @Results(id="TbDiaryResult", value = {
+    @Results(id="TbDiaryAkResult", value = {
         @Result(column="diary_id", property="diaryId", jdbcType=JdbcType.CHAR, id=true),
         @Result(column="subject_type", property="subjectType", jdbcType=JdbcType.CHAR),
         @Result(column="title", property="title", jdbcType=JdbcType.CHAR),
@@ -52,33 +50,33 @@ public interface TbDiaryMapper extends CommonCountMapper, CommonDeleteMapper, Co
         @Result(column="content_2", property="content2", jdbcType=JdbcType.LONGVARCHAR),
         @Result(column="content_3", property="content3", jdbcType=JdbcType.LONGVARCHAR)
     })
-    List<TbDiary> selectMany(SelectStatementProvider selectStatement);
+    List<TbDiaryAk> selectMany(SelectStatementProvider selectStatement);
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5668475+09:00", comments="Source Table: tb_diary")
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5043165+09:00", comments="Source Table: tb_diary_ak")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @ResultMap("TbDiaryResult")
-    Optional<TbDiary> selectOne(SelectStatementProvider selectStatement);
+    @ResultMap("TbDiaryAkResult")
+    Optional<TbDiaryAk> selectOne(SelectStatementProvider selectStatement);
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5678474+09:00", comments="Source Table: tb_diary")
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5053138+09:00", comments="Source Table: tb_diary_ak")
     default long count(CountDSLCompleter completer) {
-        return MyBatis3Utils.countFrom(this::count, tbDiary, completer);
+        return MyBatis3Utils.countFrom(this::count, tbDiaryAk, completer);
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5688438+09:00", comments="Source Table: tb_diary")
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5063112+09:00", comments="Source Table: tb_diary_ak")
     default int delete(DeleteDSLCompleter completer) {
-        return MyBatis3Utils.deleteFrom(this::delete, tbDiary, completer);
+        return MyBatis3Utils.deleteFrom(this::delete, tbDiaryAk, completer);
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5698786+09:00", comments="Source Table: tb_diary")
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5063112+09:00", comments="Source Table: tb_diary_ak")
     default int deleteByPrimaryKey(String diaryId_) {
         return delete(c -> 
             c.where(diaryId, isEqualTo(diaryId_))
         );
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.57084+09:00", comments="Source Table: tb_diary")
-    default int insert(TbDiary row) {
-        return MyBatis3Utils.insert(this::insert, row, tbDiary, c ->
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5073084+09:00", comments="Source Table: tb_diary_ak")
+    default int insert(TbDiaryAk row) {
+        return MyBatis3Utils.insert(this::insert, row, tbDiaryAk, c ->
             c.map(diaryId).toProperty("diaryId")
             .map(subjectType).toProperty("subjectType")
             .map(title).toProperty("title")
@@ -90,9 +88,9 @@ public interface TbDiaryMapper extends CommonCountMapper, CommonDeleteMapper, Co
         );
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5738324+09:00", comments="Source Table: tb_diary")
-    default int insertMultiple(Collection<TbDiary> records) {
-        return MyBatis3Utils.insertMultiple(this::insertMultiple, records, tbDiary, c ->
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.511311+09:00", comments="Source Table: tb_diary_ak")
+    default int insertMultiple(Collection<TbDiaryAk> records) {
+        return MyBatis3Utils.insertMultiple(this::insertMultiple, records, tbDiaryAk, c ->
             c.map(diaryId).toProperty("diaryId")
             .map(subjectType).toProperty("subjectType")
             .map(title).toProperty("title")
@@ -104,9 +102,9 @@ public interface TbDiaryMapper extends CommonCountMapper, CommonDeleteMapper, Co
         );
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5754867+09:00", comments="Source Table: tb_diary")
-    default int insertSelective(TbDiary row) {
-        return MyBatis3Utils.insert(this::insert, row, tbDiary, c ->
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5132958+09:00", comments="Source Table: tb_diary_ak")
+    default int insertSelective(TbDiaryAk row) {
+        return MyBatis3Utils.insert(this::insert, row, tbDiaryAk, c ->
             c.map(diaryId).toPropertyWhenPresent("diaryId", row::getDiaryId)
             .map(subjectType).toPropertyWhenPresent("subjectType", row::getSubjectType)
             .map(title).toPropertyWhenPresent("title", row::getTitle)
@@ -118,35 +116,35 @@ public interface TbDiaryMapper extends CommonCountMapper, CommonDeleteMapper, Co
         );
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5789812+09:00", comments="Source Table: tb_diary")
-    default Optional<TbDiary> selectOne(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectOne(this::selectOne, selectList, tbDiary, completer);
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5163211+09:00", comments="Source Table: tb_diary_ak")
+    default Optional<TbDiaryAk> selectOne(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectOne(this::selectOne, selectList, tbDiaryAk, completer);
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5789812+09:00", comments="Source Table: tb_diary")
-    default List<TbDiary> select(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectList(this::selectMany, selectList, tbDiary, completer);
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5172844+09:00", comments="Source Table: tb_diary_ak")
+    default List<TbDiaryAk> select(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectList(this::selectMany, selectList, tbDiaryAk, completer);
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5800005+09:00", comments="Source Table: tb_diary")
-    default List<TbDiary> selectDistinct(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, tbDiary, completer);
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5172844+09:00", comments="Source Table: tb_diary_ak")
+    default List<TbDiaryAk> selectDistinct(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, tbDiaryAk, completer);
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5813625+09:00", comments="Source Table: tb_diary")
-    default Optional<TbDiary> selectByPrimaryKey(String diaryId_) {
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5182814+09:00", comments="Source Table: tb_diary_ak")
+    default Optional<TbDiaryAk> selectByPrimaryKey(String diaryId_) {
         return selectOne(c ->
             c.where(diaryId, isEqualTo(diaryId_))
         );
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5823954+09:00", comments="Source Table: tb_diary")
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5192786+09:00", comments="Source Table: tb_diary_ak")
     default int update(UpdateDSLCompleter completer) {
-        return MyBatis3Utils.update(this::update, tbDiary, completer);
+        return MyBatis3Utils.update(this::update, tbDiaryAk, completer);
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5823954+09:00", comments="Source Table: tb_diary")
-    static UpdateDSL<UpdateModel> updateAllColumns(TbDiary row, UpdateDSL<UpdateModel> dsl) {
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5192786+09:00", comments="Source Table: tb_diary_ak")
+    static UpdateDSL<UpdateModel> updateAllColumns(TbDiaryAk row, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(diaryId).equalTo(row::getDiaryId)
                 .set(subjectType).equalTo(row::getSubjectType)
                 .set(title).equalTo(row::getTitle)
@@ -157,8 +155,8 @@ public interface TbDiaryMapper extends CommonCountMapper, CommonDeleteMapper, Co
                 .set(content3).equalTo(row::getContent3);
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5833903+09:00", comments="Source Table: tb_diary")
-    static UpdateDSL<UpdateModel> updateSelectiveColumns(TbDiary row, UpdateDSL<UpdateModel> dsl) {
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5203096+09:00", comments="Source Table: tb_diary_ak")
+    static UpdateDSL<UpdateModel> updateSelectiveColumns(TbDiaryAk row, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(diaryId).equalToWhenPresent(row::getDiaryId)
                 .set(subjectType).equalToWhenPresent(row::getSubjectType)
                 .set(title).equalToWhenPresent(row::getTitle)
@@ -169,8 +167,8 @@ public interface TbDiaryMapper extends CommonCountMapper, CommonDeleteMapper, Co
                 .set(content3).equalToWhenPresent(row::getContent3);
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.5843874+09:00", comments="Source Table: tb_diary")
-    default int updateByPrimaryKey(TbDiary row) {
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5213068+09:00", comments="Source Table: tb_diary_ak")
+    default int updateByPrimaryKey(TbDiaryAk row) {
         return update(c ->
             c.set(subjectType).equalTo(row::getSubjectType)
             .set(title).equalTo(row::getTitle)
@@ -183,8 +181,8 @@ public interface TbDiaryMapper extends CommonCountMapper, CommonDeleteMapper, Co
         );
     }
 
-    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2022-12-06T23:13:59.585386+09:00", comments="Source Table: tb_diary")
-    default int updateByPrimaryKeySelective(TbDiary row) {
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", date="2023-01-10T21:26:08.5222706+09:00", comments="Source Table: tb_diary_ak")
+    default int updateByPrimaryKeySelective(TbDiaryAk row) {
         return update(c ->
             c.set(subjectType).equalToWhenPresent(row::getSubjectType)
             .set(title).equalToWhenPresent(row::getTitle)
@@ -199,18 +197,9 @@ public interface TbDiaryMapper extends CommonCountMapper, CommonDeleteMapper, Co
 
     /** ----------------SELECT------------------- */
     /** お試し */
-    @Select("SELECT * FROM tb_diary ORDER BY regist_date DESC")
-    List<TbDiary> selectAll();
+    @Select("SELECT * FROM tb_diary_ak ORDER BY regist_date DESC")
+    List<TbDiaryAk> selectAll();
 
-    /** 日誌番号の連番を取得するため */
-    @Select("SELECT COUNT(*) FROM tb_diary WHERE diary_id LIKE '%${date}%'")
-    int countRecord(String date);
-
-    @Select("SELECT * FROM tb_diary WHERE subject_type = #{subjectType} ORDER BY regist_date DESC")
-	List<TbDiary> selectSubjectType(String subjectType); 
-
-    /** ----------------DELETE------------------- */
-    /** ハウスキープ処理用 */
-    @Delete("DELETE FROM tb_diary WHERE regist_date <= #{houseKeepDate}")
-	int deleteHouseKeep(Timestamp houseKeepDate);
+    @Select("SELECT * FROM tb_diary_ak WHERE subject_type = #{subjectType} ORDER BY regist_date DESC")
+	List<TbDiaryAk> selectSubjectType(String subjectType); 
 }

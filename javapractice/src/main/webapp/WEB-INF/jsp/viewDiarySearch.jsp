@@ -18,17 +18,20 @@
 <body>
 <!-- Javaから受け取る変数 -->
 <% List<String> pullDownList =  (List<String>)request.getAttribute("pullDownList"); %>
+<% List<String> errorMessageList = (List<String>)request.getAttribute("errorMessageList"); %>
 <% List<TbDiary> tbDiaryList = (List<TbDiary>)request.getAttribute("tbDiaryList"); %>
 <% List<TbDiaryAk> tbDiaryAkList = (List<TbDiaryAk>)request.getAttribute("tbDiaryAkList"); %>
-<% String errorMessage = (String)request.getAttribute("errorMessage"); %>
 
 <header class="header">
 	<h1 class="header_title"><a href="/menu">日誌検索</a></h1>
 </header>
+
 <main>
 	<div class="main">
-		<% if (!errorMessage.isEmpty()) { %>
-			<%= errorMessage %>
+		<% if (!errorMessageList.isEmpty()) { %>
+			<% for (String errorMessage: errorMessageList) { %>
+				<%= errorMessage %>
+			<% } %>
 		<% } else { %>
 		<label>内容種別：</label>
 		<form name="form1">
@@ -67,12 +70,29 @@
 					</tr>
 				<% } %>
 			<% } %>
+			<% if (!Objects.isNull(tbDiaryAkList)) { %>
+				<% for (TbDiaryAk tbDiaryAk: tbDiaryAkList) { %>
+					<tr>
+						<th><%= tbDiaryAk.getDiaryId() %></th>
+						<th><%= tbDiaryAk.getSubjectType() %></th>
+						<th><%= tbDiaryAk.getTitle() %></th>
+						<th><%= tbDiaryAk.getContent1() %></th>
+						<th><%= tbDiaryAk.getContent2() %></th>
+						<th><%= tbDiaryAk.getContent3() %></th>
+						<th><%= tbDiaryAk.getRegistDate() %></th>
+						<th><%= tbDiaryAk.getRemarks() %></th>
+					</tr>
+				<% } %>
+			<% } %>
 		</table>
 		<% } %>
 	</div>
 </main>
 <footer class="footer">
 </footer>
+
+<div id="aaa">
+</div>
 
 </body>
 </html>

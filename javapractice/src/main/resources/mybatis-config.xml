@@ -20,6 +20,7 @@
 <!--     エンティティのパッケージを指定します(2) -->
     <mappers>
         <mapper class="com.javapractice.app.mybatis.client.TbDiaryMapper" />
+        <mapper class="com.javapractice.app.mybatis.client.TbDiaryAkMapper" />
         <mapper class="com.javapractice.app.mybatis.client.TbExecClassMapper" />
     </mappers>
 </configuration>

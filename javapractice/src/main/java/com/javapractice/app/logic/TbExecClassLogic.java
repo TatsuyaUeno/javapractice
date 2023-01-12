@@ -60,6 +60,7 @@ public class TbExecClassLogic {
 	}
 
 	/**
+	 * 1件更新<br>
 	 * クラス名と実行フラグを受け取りレコードを更新する<br>
 	 * @param className クラス名(プライマリーキー)
 	 * @param execFlg　実行フラグ
@@ -68,13 +69,11 @@ public class TbExecClassLogic {
 	@Transactional
 	public void updateExecFlg(String className, String execFlg, String logPrefix) throws Exception {
 		try {
-			logger.info(logPrefix + "クラス実行テーブル更新処理を開始します。");
 			SqlSession session = sqlSessionFactory.openSession();
 			// 設定ファイルに定義したmapperクラスをget
 			TbExecClassMapper mapper = session.getMapper(TbExecClassMapper.class);
 			mapper.updateExecFlg(className, execFlg);
 			session.commit();
-			logger.info(logPrefix + "クラス実行テーブル更新処理を終了します。");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception(Constants.DB_ERROR_MESSAGE);
@@ -90,13 +89,11 @@ public class TbExecClassLogic {
 	@Transactional
 	public void insert(TbExecClass tbExecClass, String logPrefix) throws Exception {
 		try {
-			logger.info(logPrefix + "クラス実行テーブル登録処理を開始します。");
 			SqlSession session = sqlSessionFactory.openSession();
 			// 設定ファイルに定義したmapperクラスをget
 			TbExecClassMapper mapper = session.getMapper(TbExecClassMapper.class);
 			mapper.insert(tbExecClass);
 			session.commit();
-			logger.info(logPrefix + "クラス実行テーブル登録処理を終了します。");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception(Constants.DB_ERROR_MESSAGE);
@@ -119,5 +116,18 @@ public class TbExecClassLogic {
 			throw new Exception(Constants.DB_ERROR_MESSAGE);
 		}
 		return tbExecClassList;
+	}
+
+	public int countPk(String className) throws Exception {
+		int count;
+		try {
+			SqlSession session = sqlSessionFactory.openSession();
+			TbExecClassMapper mapper = session.getMapper(TbExecClassMapper.class);
+			count = mapper.countPk(className);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(Constants.DB_ERROR_MESSAGE);
+		}
+		return count;
 	}
 }

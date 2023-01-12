@@ -1,6 +1,7 @@
 package com.javapractice.app.logic;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -56,7 +57,7 @@ public class TbDiaryLogic {
 			result = mapper.selectAll();
 			
 		} catch (Exception e) {
-			logger.warn(Constants.DB_ERROR_MESSAGE, e);
+			e.printStackTrace();
 			throw new Exception(Constants.DB_ERROR_MESSAGE);
 		}
 		return result;
@@ -77,7 +78,7 @@ public class TbDiaryLogic {
 			
 			return mapper.countRecord(date);
 		} catch (Exception e) {
-			logger.error(Constants.DB_ERROR_MESSAGE, e);
+			e.printStackTrace();
 			throw new Exception(Constants.DB_ERROR_MESSAGE);
 		}
 	}
@@ -91,12 +92,51 @@ public class TbDiaryLogic {
 			logger.info(logPrefix + "日誌番号: " + tbDiaryEntity.getDiaryId() + ", 処理件数: " + insertCnt);
 			session.commit();
 		} catch (Exception e) {
-			logger.error(Constants.DB_ERROR_MESSAGE, e);
+			e.printStackTrace();
 			throw new Exception(Constants.DB_ERROR_MESSAGE);
 		}
 		// 正常終了の場合、レスポンスDtoに日誌番号をsetし、プロセスフラグをtrueに
 		responseDto.setRegistDiaryId(tbDiaryEntity.getDiaryId());
 		responseDto.setProcessFlg(true);
+	}
+
+	/**
+	 * 日時を受け取り、それより以前に登録されたレコードを削除する<br>
+	 * @param houseKeepDate 登録日時比較用(現在日時の1ヵ月前の日時)
+	 * @param logPrefx
+	 * @throws Exception 
+	 */
+	@Transactional
+	public void deleteHouseKeep(Timestamp houseKeepDate, String logPrefx) throws Exception {
+		try {
+			SqlSession session = sqlSessionFactory.openSession();
+			TbDiaryMapper mapper = session.getMapper(TbDiaryMapper.class);
+			int deleteCnt = mapper.deleteHouseKeep(houseKeepDate);
+			session.commit();
+			logger.info(logPrefx + "登録日時=「" + houseKeepDate + "」以前のレコードを削除しました。" + "削除件数=「" + deleteCnt + "」");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(Constants.DB_ERROR_MESSAGE);
+		}
+	}
+
+	/**
+	 * 内容種別で検索する<br>
+	 * @param subjectType 内容種別
+	 * @return
+	 * @throws Exception 
+	 */
+	public List<TbDiary> selectSubjectTyp(String subjectType) throws Exception {
+		List<TbDiary> resList = null;
+		try {
+			SqlSession session = sqlSessionFactory.openSession();
+			TbDiaryMapper mapper = session.getMapper(TbDiaryMapper.class);
+			resList = mapper.selectSubjectType(subjectType);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(Constants.DB_ERROR_MESSAGE);
+		}
+		return resList;
 	}
 
 }

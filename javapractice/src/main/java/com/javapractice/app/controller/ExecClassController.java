@@ -88,11 +88,20 @@ public class ExecClassController {
 		// 例外処理はココで行い、catchに入ればエラー文を入れる
 		try {
 			logger.info(logPrefix + "処理を開始します。");
+			// 受け取ったクラス名がすでに登録されていた場合、エラーになってしまうので検索する
+			int count = tbExecClassLogic.countPk(className);
+			if (count > 0) {
+				logger.info(logPrefix + "すでにレコード登録されているクラス名なので登録処理をスキップします。クラス名＝「" + className + "」");
+				throw new RuntimeException();
+			}
+
 			execClassService.insertClassName(className, logPrefix);
 			// 成功した場合、空文字をセットする
 			resDto.setErrorMessage(Constants.EMPTY_CHAR);
+		} catch (RuntimeException re) {
+			// ただ処理をスキップする
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(logPrefix + e.getMessage());
 			resDto.setErrorMessage(e.getMessage());
 		}
 
@@ -122,7 +131,7 @@ public class ExecClassController {
 			// 成功した場合、空文字をセットする
 			resDto.setErrorMessage(Constants.EMPTY_CHAR);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(logPrefix + e.getMessage());
 			resDto.setErrorMessage(e.getMessage());
 		}
 

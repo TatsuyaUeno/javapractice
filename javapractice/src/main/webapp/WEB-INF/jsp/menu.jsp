@@ -28,7 +28,7 @@
 					<td><a href="/exec/class">クラス実行</a></td>
 				</tr>
 				<tr>
-					<td><a href="/view/diary">日誌閲覧</a></td>
+					<td><a href="/view/diary">日誌検索</a></td>
 					<td></td>
 				</tr>
 			</table>

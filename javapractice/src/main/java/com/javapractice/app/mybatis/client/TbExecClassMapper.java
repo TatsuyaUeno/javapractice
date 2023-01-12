@@ -170,6 +170,9 @@ public interface TbExecClassMapper extends CommonCountMapper, CommonDeleteMapper
     @Select("SELECT class_name FROM tb_exec_class WHERE exec_flg = #{execFlg}")
     List<String> selectActiveExecFlg(String execFlg);
 
+    @Select("SELECT COUNT(class_name) FROM tb_exec_class WHERE class_name = #{className}")
+	int countPk(String className);
+
     @Update("UPDATE tb_exec_class set exec_flg = #{execFlg} where class_name = #{className}")
 	void updateExecFlg(String className, String execFlg);
 }
