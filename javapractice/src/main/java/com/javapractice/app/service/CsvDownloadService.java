@@ -53,7 +53,7 @@ public class CsvDownloadService {
 
 		try {
 			// ファイル名の現在日時を取得
-			String nowDate = DateTimeUtil.getNowDate_yyyyMMdd();
+			String nowDate = DateTimeUtil.getNowDate_yyyyMMddhhmmss();
 
 			// レスポンスの設定
 			response.setHeader("Content-Type", "text/csv; charset=utf-8");

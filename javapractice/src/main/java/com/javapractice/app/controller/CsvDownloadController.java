@@ -52,6 +52,7 @@ public class CsvDownloadController {
 			// csvを作成する
 			csvDownloadService.makeCsv(request, response, tableName);
 		}
+		response.setStatus(HttpServletResponse.SC_OK);
 
 		return "csvDownload";
 	}

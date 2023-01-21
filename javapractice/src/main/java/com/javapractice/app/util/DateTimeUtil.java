@@ -33,4 +33,19 @@ public class DateTimeUtil {
 		// フォーマット指定した文字列を返す
 		return nowDate.format(format);
 	}
+
+	/**
+	 * 現在の日時をyyyyMMddhhmmssの文字列で返す<br>
+	 * @return nowDate
+	 */
+	public static String getNowDate_yyyyMMddhhmmss() {
+		// 現在の時間を取得
+		LocalDateTime nowDate = LocalDateTime.now();
+
+		// フォーマットを指定
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddhhmmss");
+
+		// フォーマット指定した文字列を返す
+		return nowDate.format(format);
+	}
 }
