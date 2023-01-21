@@ -40,7 +40,7 @@
 					<tr>
 						<th>クラス名</th>
 						<th>実行フラグ</th>
-						<th>登録日時</th>
+						<th>更新日時</th>
 						<th>備考</th>
 					</tr>
 					<% for (TbExecClass tbExecClass: list) { %>

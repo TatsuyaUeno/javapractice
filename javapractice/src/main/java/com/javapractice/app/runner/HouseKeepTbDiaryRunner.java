@@ -54,10 +54,10 @@ public class HouseKeepTbDiaryRunner {
 			houseKeepDate.setMonth(HOUSE_KEEP_MONTH);
 
 			// スレッド起動で呼び出されたため、本クラスはDI管理されていない
-			// よってアノテーションが使えないので、下記のような形でコンテナからコンポーネントを取得して使用する
+			// よってアノテーション(Autowired)が使えないので、下記のような形でコンテナからコンポーネントを取得して使用する
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 			TbDiaryLogic tbDiaryLogic = ctx.getBean(TbDiaryLogic.class);
-			
+
 			// 1ヵ月前に登録されたレコードを削除する
 			tbDiaryLogic.deleteHouseKeep(houseKeepDate, logPrefx);
 		} catch (Exception e) {

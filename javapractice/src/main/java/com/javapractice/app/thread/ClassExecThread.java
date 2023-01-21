@@ -36,7 +36,7 @@ public class ClassExecThread implements Runnable {
 	/** runnerパッケージパス */
 	private static final String RUNNER_PACKAGE = "com.javapractice.app.runner.";
 
-	/** Runnerの呼出しメソッド */
+	/** Runnerの最初に呼ばれるメソッド */
 	private static final String METHOD_NAME = "execEvent";
 
 	/**
@@ -46,11 +46,16 @@ public class ClassExecThread implements Runnable {
 	@Override
 	public void run() {
 		boolean flg = true;
+		// ログが多くなりすぎないためのcount
+		int count = 5;
 		while (flg) {
-			logger.info(logPrefix + "監視中...");
+			if (count > 4) {
+				logger.info(logPrefix + "監視中...");
+				count = 0;
+			}
 			List<String> classNameList = null;
 
-			// 実行フラグ = 1で実行フラグテーブルを検索
+			// 実行フラグ = 1でクラス実行テーブルを検索
 			try {
 				classNameList = tbExecClassLogic.selectActiveExecFlg();
 				// 取得したクラス名分クラスを起動させる
@@ -71,6 +76,7 @@ public class ClassExecThread implements Runnable {
 						logger.info(logPrefix + "クラス名=[" + className + "]の実行フラグを落としました。");
 					}
 				}
+				count ++;
 				// 30秒ごとに監視するため、スレッドを30秒停止
 				Thread.sleep(30000);
 			} catch (InterruptedException ie) {

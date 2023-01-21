@@ -22,13 +22,16 @@
 				<tr>
 					<th>日誌</th>
 					<th>クラス実行</th>
+					<th>ダウンロード</th>
 				</tr>
 				<tr>
 					<td><a href="/regist/diary">日誌登録</a></td>
 					<td><a href="/exec/class">クラス実行</a></td>
+					<td><a href="/csv/download?tableName=">csvダウンロード</a></td>
 				</tr>
 				<tr>
 					<td><a href="/view/diary">日誌検索</a></td>
+					<td></td>
 					<td></td>
 				</tr>
 			</table>

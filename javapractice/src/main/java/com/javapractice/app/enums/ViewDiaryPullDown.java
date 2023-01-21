@@ -11,7 +11,10 @@ public enum ViewDiaryPullDown {
 	JAVA("Java"),
 	DIARY("日誌"),
 	BUSINESS("業務"),
-	VUE_JS("Vue");
+	VUE_JS("Vue"),
+	TERATERM("teraterm"),
+	CSS("css"),
+	IMPLEMENTS("実装");
 
 	/** プルダウンの項目名 */
 	private String pullDownName;
